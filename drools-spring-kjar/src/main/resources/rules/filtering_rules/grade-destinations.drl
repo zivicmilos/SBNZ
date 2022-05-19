@@ -1,0 +1,25 @@
+package rules.filtering_rules;
+dialect  "mvel"
+
+import travel_recommendation.model.User;
+import travel_recommendation.model.Destination;
+import travel_recommendation.model.TransportationType;
+import travel_recommendation.model.Location;
+
+rule "Higher score if transportation is matching"
+    lock-on-active
+    when
+        $u : User()
+        $d : Destination(transportationTypes contains $u.transportationTypes[0])
+    then
+        modify($d){setScore($d.getScore()+10)}
+end
+
+rule "Higher score if destination is closer"
+    lock-on-active
+    when
+        $d : Destination($dl : location)
+        $u : User($ul : location, Location.distance($dl.getCoordinates(), $ul.getCoordinates()) < 1500)
+    then
+        modify($d){setScore($d.getScore()+15)}
+end
