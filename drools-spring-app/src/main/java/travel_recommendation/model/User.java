@@ -1,8 +1,6 @@
 package travel_recommendation.model;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 public class User {
     private String name;
@@ -10,7 +8,10 @@ public class User {
     private LocalDate dateOfBirth;
     private Status status;
     private Location location;
-    private List<TransportationType> transportationTypes;
+    private TransportationType transportationType;
+    private DestinationType destinationType;
+    private Weather weather;
+    private String continent;
     private double budget;
 
     public User() {
@@ -22,8 +23,12 @@ public class User {
         this.dateOfBirth = dateOfBirth;
         this.status = status;
         this.location = location;
-        this.transportationTypes = new ArrayList<TransportationType>();
+        this.destinationType = DestinationType.NA;
+        this.transportationType = TransportationType.NA;
+        this.weather = Weather.NA;
+        this.continent = "";
         this.budget = 0;
+
     }
 
     public String getName() {
@@ -66,12 +71,12 @@ public class User {
         this.location = location;
     }
 
-    public List<TransportationType> getTransportationTypes() {
-        return transportationTypes;
+    public TransportationType getTransportationType() {
+        return transportationType;
     }
 
-    public void setTransportationTypes(List<TransportationType> transportationTypes) {
-        this.transportationTypes = transportationTypes;
+    public void setTransportationType(TransportationType transportationType) {
+        this.transportationType = transportationType;
     }
 
     public double getBudget() {
@@ -84,5 +89,29 @@ public class User {
 
     public int years() {
         return LocalDate.now().getYear() - this.dateOfBirth.getYear();
+    }
+
+    public DestinationType getDestinationType() {
+        return destinationType;
+    }
+
+    public void setDestinationType(DestinationType destinationType) {
+        this.destinationType = destinationType;
+    }
+
+    public Weather getWeather() {
+        return weather;
+    }
+
+    public void setWeather(Weather weather) {
+        this.weather = weather;
+    }
+
+    public String getContinent() {
+        return continent;
+    }
+
+    public void setContinent(String continent) {
+        this.continent = continent;
     }
 }

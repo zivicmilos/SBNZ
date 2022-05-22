@@ -6,9 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import travel_recommendation.model.Destination;
-import travel_recommendation.model.TransportationType;
-import travel_recommendation.model.User;
+import travel_recommendation.model.*;
 import travel_recommendation.repository.Repository;
 
 import java.util.Comparator;
@@ -28,18 +26,25 @@ public class DestinationService {
 
     }
 
-    public List<Destination> getDestinationList(TransportationType transportationType, double budget) {
+    public List<Destination> getDestinationList(TransportationType transportationType, double budget,
+                                                DestinationType destinationType, Weather weather, String continent) {
         KieSession kieSession = kieContainer.newKieSession();
         Repository repository = new Repository();
+
         User user = repository.getUser();
         user.setBudget(budget);
-        List<TransportationType> userTransportationTypes = user.getTransportationTypes();
-        userTransportationTypes.add(transportationType);
-        user.setTransportationTypes(userTransportationTypes);
+        user.setTransportationType(transportationType);
+        user.setDestinationType(destinationType);
+        user.setWeather(weather);
+        user.setContinent(continent);
+
         List<Destination> destinations = repository.getDestinations();
         kieSession.insert(user);
         for (Destination d : destinations)
             kieSession.insert(d);
+        kieSession.getAgenda().getAgendaGroup("add-transportation-types").setFocus();
+        kieSession.fireAllRules();
+        kieSession.getAgenda().getAgendaGroup("grade-destinations").setFocus();
         kieSession.fireAllRules();
         kieSession.dispose();
 

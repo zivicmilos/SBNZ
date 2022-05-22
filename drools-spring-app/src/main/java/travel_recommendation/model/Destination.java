@@ -1,5 +1,6 @@
 package travel_recommendation.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Destination {
@@ -53,11 +54,32 @@ public class Destination {
         this.transportationTypes = transportationTypes;
     }
 
+    public void addTransportationType(TransportationType transportationType) {
+        this.transportationTypes.add(transportationType);
+    }
+
     public double getScore() {
         return score;
     }
 
     public void setScore(double score) {
         this.score = score;
+    }
+
+    public double costByTransportType(TransportationType transportationType, Location userLocation) {
+        double distance = Location.distance(userLocation.getCoordinates(), this.location.getCoordinates());
+        double cost = 0;
+        switch (transportationType) {
+            case CAR:
+                return (distance * 0.2);
+            case BUS:
+                return (distance * 0.12);
+            case TRAIN:
+                return (distance * 0.08);
+            case PLANE:
+                return (distance * 0.4);
+            default:
+                return cost;
+        }
     }
 }

@@ -1,5 +1,5 @@
 package travel_recommendation.model;
 
 public enum TransportationType {
-    CAR, BUS, SHIP, TRAIN, PLANE
+    NA, CAR, BUS, TRAIN, PLANE
 }
