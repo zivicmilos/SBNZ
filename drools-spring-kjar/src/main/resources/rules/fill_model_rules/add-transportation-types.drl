@@ -27,5 +27,5 @@ rule "Add transportation types if continent is same"
         eval($transportationTypes.empty)
     then
         modify($d){addTransportationType(TransportationType.CAR), addTransportationType(TransportationType.BUS),
-                   addTransportationType(TransportationType.TRAIN)}
+                   addTransportationType(TransportationType.TRAIN),addTransportationType(TransportationType.PLANE)}
 end

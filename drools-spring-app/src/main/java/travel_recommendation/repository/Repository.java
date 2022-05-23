@@ -39,7 +39,7 @@ public class Repository {
         this.destinations.add(new Destination(Weather.WARM, new ArrayList<DestinationType>() {{
             add(DestinationType.OFFSHORE); add(DestinationType.ENERGETIC); add(DestinationType.PARTY);
         }}, new Location("Corfu", "Greece", "Europe", new Coordinates(39.621590, 19.915163)),
-                new ArrayList<>()));
+                new ArrayList<>(){{ add(TransportationType.PLANE); }}));
 
         this.destinations.add(new Destination(Weather.NEUTRAL, new ArrayList<DestinationType>() {{
             add(DestinationType.URBAN); add(DestinationType.PARTY);
@@ -62,7 +62,7 @@ public class Repository {
 
         }}));
 
-        this.destinations.add(new Destination(Weather.NEUTRAL, new ArrayList<DestinationType>() {{
+        this.destinations.add(new Destination(Weather.WARM, new ArrayList<DestinationType>() {{
             add(DestinationType.RURAL); add(DestinationType.EXOTIC);
         }}, new Location("Bernal", "Mexico", "North America", new Coordinates(20.734589, -99.935713)), new ArrayList<>() {{
 
@@ -86,7 +86,7 @@ public class Repository {
 
         }}));
 
-        this.destinations.add(new Destination(Weather.WARM, new ArrayList<DestinationType>() {{
+        this.destinations.add(new Destination(Weather.NEUTRAL, new ArrayList<DestinationType>() {{
             add(DestinationType.URBAN); add(DestinationType.PARTY);
         }}, new Location("Wellington", "New Zeland", "Australia", new Coordinates(-41.305072, 174.770091)), new ArrayList<>() {{
             add(TransportationType.PLANE);

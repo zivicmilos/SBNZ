@@ -77,7 +77,7 @@ public class Destination {
             case TRAIN:
                 return (distance * 0.08);
             case PLANE:
-                return (distance * 0.4);
+                return (50 + (distance * 0.11));
             default:
                 return cost;
         }

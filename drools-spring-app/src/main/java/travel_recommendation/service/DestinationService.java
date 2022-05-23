@@ -46,6 +46,8 @@ public class DestinationService {
         kieSession.fireAllRules();
         kieSession.getAgenda().getAgendaGroup("grade-destinations").setFocus();
         kieSession.fireAllRules();
+        kieSession.getAgenda().getAgendaGroup("grade-destinations-budget").setFocus();
+        kieSession.fireAllRules();
         kieSession.dispose();
 
         destinations.sort(Comparator.comparing(Destination::getScore).reversed());
