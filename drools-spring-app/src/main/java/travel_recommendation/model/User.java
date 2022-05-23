@@ -87,7 +87,7 @@ public class User {
         this.budget = budget;
     }
 
-    public int years() {
+    public int getAge() {
         return LocalDate.now().getYear() - this.dateOfBirth.getYear();
     }
 
@@ -113,5 +113,20 @@ public class User {
 
     public void setContinent(String continent) {
         this.continent = continent;
+    }
+
+    public Weather getUserWeather() {
+        int month = LocalDate.now().getMonth().getValue();
+        if (this.location.getContinent().equals("Europe") || this.location.getContinent().equals("Asia") || this.location.getContinent().equals("North America")) {
+            if (month <= 2 || month == 12) return Weather.COLD;
+            else if (month >= 6 && month <= 8) return Weather.WARM;
+            else return Weather.NEUTRAL;
+        }
+        else if (this.location.getContinent().equals("Australia") || this.location.getContinent().equals("South America")) {
+            if (month <= 2 || month == 12) return Weather.WARM;
+            else if (month >= 6 && month <= 8) return Weather.COLD;
+            else return Weather.NEUTRAL;
+        }
+        else return Weather.WARM;
     }
 }

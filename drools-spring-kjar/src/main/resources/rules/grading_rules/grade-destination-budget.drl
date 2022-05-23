@@ -118,8 +118,8 @@ rule "High score if budget is enough and transportation type exists"
     agenda-group "grade-destinations-budget"
     lock-on-active
     when
-        $u : User($ul : location)
-        $d : Destination($dl : location, transportationTypes contains $u.transportationType, costByTransportType($u.transportationType, $u.location) <= $u.budget)
+        $u : User()
+        $d : Destination(transportationTypes contains $u.transportationType, costByTransportType($u.transportationType, $u.location) <= $u.budget)
     then
         modify($d){setScore($d.getScore()+15)}
 end
@@ -129,8 +129,8 @@ rule "Medium score if budget is enough and transportation type not exists"
     agenda-group "grade-destinations-budget"
     lock-on-active
     when
-        $u : User($ul : location)
-        $d : Destination($dl : location, transportationTypes not contains $u.transportationType, costByTransportType(TransportationType.PLANE, $u.location) <= $u.budget)
+        $u : User()
+        $d : Destination(transportationTypes not contains $u.transportationType, costByTransportType(TransportationType.PLANE, $u.location) <= $u.budget)
     then
         modify($d){setScore($d.getScore()+10)}
 end
@@ -140,8 +140,8 @@ rule "High negative score if budget is not enough and transportation type not ex
     agenda-group "grade-destinations-budget"
     lock-on-active
     when
-        $u : User($ul : location)
-        $d : Destination($dl : location, transportationTypes not contains $u.transportationType, costByTransportType($u.transportationType, $u.location) > $u.budget)
+        $u : User()
+        $d : Destination(transportationTypes not contains $u.transportationType, costByTransportType($u.transportationType, $u.location) > $u.budget)
     then
         modify($d){setScore($d.getScore()-15)}
 end
@@ -151,8 +151,8 @@ rule "Medium negative score if budget is not enough and transportation type exis
     agenda-group "grade-destinations-budget"
     lock-on-active
     when
-        $u : User($ul : location)
-        $d : Destination($dl : location, transportationTypes contains $u.transportationType, costByTransportType(TransportationType.PLANE, $u.location) > $u.budget)
+        $u : User()
+        $d : Destination(transportationTypes contains $u.transportationType, costByTransportType(TransportationType.PLANE, $u.location) > $u.budget)
     then
         modify($d){setScore($d.getScore()-10)}
 end
