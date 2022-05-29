@@ -11,7 +11,7 @@ rule "Add plane as transportation type if continent is not same"
     lock-on-active
     when
         $u : User()
-        $d: Destination($transportationTypes: transportationTypes, location.continent != $u.location.continent)
+        $d: Destination($u.username == username, $transportationTypes: transportationTypes, location.continent != $u.location.continent)
         eval($transportationTypes.empty)
     then
         modify($d){addTransportationType(TransportationType.PLANE)}
@@ -23,7 +23,7 @@ rule "Add transportation types if continent is same"
     lock-on-active
     when
         $u : User()
-        $d: Destination($transportationTypes: transportationTypes, location.continent == $u.location.continent)
+        $d: Destination($u.username == username, $transportationTypes: transportationTypes, location.continent == $u.location.continent)
         eval($transportationTypes.empty)
     then
         modify($d){addTransportationType(TransportationType.CAR), addTransportationType(TransportationType.BUS),

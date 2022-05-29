@@ -1,6 +1,5 @@
 package travel_recommendation.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Destination {
@@ -9,6 +8,7 @@ public class Destination {
     private Location location;
 
     private List<TransportationType> transportationTypes;
+    private String username;
     private double score;
 
     public Destination() {
@@ -19,6 +19,7 @@ public class Destination {
         this.destinationTypes = destinationTypes;
         this.location = location;
         this.transportationTypes = transportationTypes;
+        this.username = "";
         this.score = 0;
     }
 
@@ -81,5 +82,13 @@ public class Destination {
             default:
                 return cost;
         }
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

@@ -13,7 +13,7 @@ rule "Higher score if weather in user location is matching with destination weat
     lock-on-active
     when
         $d: Destination()
-        $u: User(getUserWeather() == $d.weather)
+        $u: User($d.username == username, getUserWeather() == $d.weather)
     then
         modify($d){setScore($d.getScore()+10)}
 end
@@ -25,7 +25,7 @@ rule "Higher score if destination type is student oriented"
     when
         $d: Destination(destinationTypes contains DestinationType.PARTY || destinationTypes contains DestinationType.OFFSHORE
                         || destinationTypes contains DestinationType.ENERGETIC)
-        $u: User(status == Status.STUDENT)
+        $u: User(status == Status.STUDENT, $d.username == username)
     then
         modify($d){setScore($d.getScore()+10)}
 end
@@ -37,7 +37,7 @@ rule "Higher score if destination type is employee oriented"
     when
         $d: Destination(destinationTypes contains DestinationType.ADVENTUROUS || destinationTypes contains DestinationType.OFFSHORE
                         || destinationTypes contains DestinationType.EXOTIC || destinationTypes contains DestinationType.ENERGETIC)
-        $u: User(status == Status.EMPLOYED && getAge() < 30)
+        $u: User(status == Status.EMPLOYED && getAge() < 30, $d.username == username)
     then
         modify($d){setScore($d.getScore()+10)}
 end
@@ -48,7 +48,7 @@ rule "Higher score if destination type is retiree oriented"
     lock-on-active
     when
         $d: Destination(destinationTypes contains DestinationType.HISTORIC || destinationTypes contains DestinationType.RURAL)
-        $u: User(status == Status.RETIRED)
+        $u: User(status == Status.RETIRED, $d.username == username)
     then
         modify($d){setScore($d.getScore()+10)}
 end
@@ -59,7 +59,7 @@ rule "Higher score if destination type is unemployed person oriented"
     lock-on-active
     when
         $d: Destination($dl: location)
-        $u: User(status == Status.UNEMPLOYED, $ul : location, Location.distance($dl.getCoordinates(), $ul.getCoordinates()) <= 700)
+        $u: User($d.username == username, status == Status.UNEMPLOYED, $ul : location, Location.distance($dl.getCoordinates(), $ul.getCoordinates()) <= 700)
     then
         modify($d){setScore($d.getScore()+10)}
 end

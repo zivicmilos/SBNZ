@@ -27,13 +27,14 @@ public class DestinationController {
     }
 
     @RequestMapping(value = "/destination", method = RequestMethod.GET, produces = "application/json")
-    public List<Destination> getParameters(@RequestParam(required = true) TransportationType transportationType,
+    public List<Destination> getParameters(@RequestParam(required = true) String username,
+                                           @RequestParam(required = true) TransportationType transportationType,
                                            @RequestParam(required = true) double budget,
                                            @RequestParam(required = true) DestinationType destinationType,
                                            @RequestParam(required = true) Weather weather,
                                            @RequestParam(required = true) String continent) {
 
-        return destinationService.getDestinationList(transportationType, budget, destinationType, weather, continent);
+        return destinationService.getDestinationList(username, transportationType, budget, destinationType, weather, continent);
     }
 
 }

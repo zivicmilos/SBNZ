@@ -7,19 +7,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Repository {
-    private User user;
+    private List<User> users;
     private List<Destination> destinations;
 
     public Repository() {
         this.initRepository();
     }
 
-    public User getUser() {
-        return user;
+    public List<User> getUsers() {
+        return users;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 
     public List<Destination> getDestinations() {
@@ -31,8 +31,13 @@ public class Repository {
     }
 
     private void initRepository() {
-        this.user = new User("Petar", "Petrovic", LocalDate.of(1996, 5, 5), Status.STUDENT,
-                new Location("Novi Sad", "Serbia", "Europe", new Coordinates(45.267136, 19.833549)));
+        this.users = new ArrayList<User>();
+
+        this.users.add(new User("Petar", "Petrovic", "pera", "pera", "pera@gmail.com", LocalDate.of(1996, 5, 5), Status.STUDENT,
+                new Location("Novi Sad", "Serbia", "Europe", new Coordinates(45.267136, 19.833549))));
+
+        this.users.add(new User("John", "Johnson", "john", "john", "john@gmail.com", LocalDate.of(1976, 9, 25), Status.EMPLOYED,
+                new Location("Austin", "USA", "North America", new Coordinates(30.284581, -97.743049))));
 
         this.destinations = new ArrayList<Destination>();
 

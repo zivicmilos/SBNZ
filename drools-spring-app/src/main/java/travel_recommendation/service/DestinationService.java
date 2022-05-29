@@ -26,22 +26,29 @@ public class DestinationService {
 
     }
 
-    public List<Destination> getDestinationList(TransportationType transportationType, double budget,
+    public List<Destination> getDestinationList(String username, TransportationType transportationType, double budget,
                                                 DestinationType destinationType, Weather weather, String continent) {
         KieSession kieSession = kieContainer.newKieSession();
         Repository repository = new Repository();
 
-        User user = repository.getUser();
-        user.setBudget(budget);
-        user.setTransportationType(transportationType);
-        user.setDestinationType(destinationType);
-        user.setWeather(weather);
-        user.setContinent(continent);
+        List<User> users = repository.getUsers();
+        for (User user : users) {
+            if (user.getUsername().equals(username)) {
+                user.setBudget(budget);
+                user.setTransportationType(transportationType);
+                user.setDestinationType(destinationType);
+                user.setWeather(weather);
+                user.setContinent(continent);
+            }
+            kieSession.insert(user);
+        }
 
         List<Destination> destinations = repository.getDestinations();
-        kieSession.insert(user);
-        for (Destination d : destinations)
+        for (Destination d : destinations) {
+            d.setUsername(username);
             kieSession.insert(d);
+        }
+
         kieSession.getAgenda().getAgendaGroup("add-transportation-types").setFocus();
         kieSession.fireAllRules();
         kieSession.getAgenda().getAgendaGroup("grade-destinations").setFocus();
