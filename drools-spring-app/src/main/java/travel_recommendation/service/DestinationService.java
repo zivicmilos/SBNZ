@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import travel_recommendation.dto.LikeDto;
 import travel_recommendation.model.*;
 import travel_recommendation.repository.Repository;
 
@@ -54,7 +55,7 @@ public class DestinationService {
         kieSession.fireAllRules();
         kieSession.getAgenda().getAgendaGroup("grade-destinations-budget").setFocus();
         kieSession.fireAllRules();
-        kieSession.getAgenda().getAgendaGroup("grade-destinations-complex").setFocus();
+        kieSession.getAgenda().getAgendaGroup("grade-destinations-combined-rules").setFocus();
         kieSession.fireAllRules();
         kieSession.getAgenda().getAgendaGroup("transportation_related_rules").setFocus();
         kieSession.fireAllRules();
@@ -69,5 +70,10 @@ public class DestinationService {
         destinations.sort(Comparator.comparing(Destination::getScore).reversed());
 
         return destinations;
+    }
+
+    public void like(LikeDto like) {
+        Destination d = repository.getDestinationByName(like.getDestination());
+        d.addLike(new Like(repository.getUserByUsername(like.getUser()), like.getTime()));
     }
 }

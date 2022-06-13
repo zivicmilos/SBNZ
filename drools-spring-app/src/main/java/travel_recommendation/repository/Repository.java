@@ -32,6 +32,24 @@ public class Repository {
         this.destinations = destinations;
     }
 
+    public Destination getDestinationByName(String name) {
+        for(Destination d : this.destinations) {
+            if (d.getLocation().getCity().equals(name)) {
+                return d;
+            }
+        }
+        return null;
+    }
+
+    public User getUserByUsername(String username) {
+        for(User u : this.users) {
+            if (u.getUsername().equals(username)) {
+                return u;
+            }
+        }
+        return null;
+    }
+
     private void initRepository() {
         this.users = new ArrayList<User>();
 

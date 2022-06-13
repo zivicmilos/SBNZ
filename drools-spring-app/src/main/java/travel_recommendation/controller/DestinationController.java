@@ -3,14 +3,9 @@ package travel_recommendation.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import travel_recommendation.model.Destination;
-import travel_recommendation.model.DestinationType;
-import travel_recommendation.model.TransportationType;
-import travel_recommendation.model.Weather;
+import org.springframework.web.bind.annotation.*;
+import travel_recommendation.dto.LikeDto;
+import travel_recommendation.model.*;
 import travel_recommendation.service.DestinationService;
 
 import java.util.List;
@@ -35,6 +30,11 @@ public class DestinationController {
                                            @RequestParam(required = true) String continent) {
 
         return destinationService.getDestinationList(username, transportationType, budget, destinationType, weather, continent);
+    }
+
+    @RequestMapping(value = "/like", method = RequestMethod.POST, consumes = "application/json")
+    public void like(@RequestBody LikeDto like) {
+        destinationService.like(like);
     }
 
 }

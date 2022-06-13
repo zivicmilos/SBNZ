@@ -63,3 +63,5 @@ rule "Sum of money spent for user"
     then
         modify($u){setSumSpent($sum)}
 end
+
+

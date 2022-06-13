@@ -9,7 +9,7 @@ import travel_recommendation.model.Location;
 
 rule "Higher score if weather in user location is matching with destination weather"
     salience 1
-    agenda-group "grade-destinations-complex"
+    agenda-group "grade-destinations-combined-rules"
     lock-on-active
     when
         $d: Destination()
@@ -20,7 +20,7 @@ end
 
 rule "Higher score if destination type is student oriented"
     salience 1
-    agenda-group "grade-destinations-complex"
+    agenda-group "grade-destinations-combined-rules"
     lock-on-active
     when
         $d: Destination(destinationTypes contains DestinationType.PARTY || destinationTypes contains DestinationType.OFFSHORE
@@ -32,7 +32,7 @@ end
 
 rule "Higher score if destination type is employee oriented"
     salience 1
-    agenda-group "grade-destinations-complex"
+    agenda-group "grade-destinations-combined-rules"
     lock-on-active
     when
         $d: Destination(destinationTypes contains DestinationType.ADVENTUROUS || destinationTypes contains DestinationType.OFFSHORE
@@ -44,7 +44,7 @@ end
 
 rule "Higher score if destination type is retiree oriented"
     salience 1
-    agenda-group "grade-destinations-complex"
+    agenda-group "grade-destinations-combined-rules"
     lock-on-active
     when
         $d: Destination(destinationTypes contains DestinationType.HISTORIC || destinationTypes contains DestinationType.RURAL)
@@ -55,7 +55,7 @@ end
 
 rule "Higher score if destination type is unemployed person oriented"
     salience 1
-    agenda-group "grade-destinations-complex"
+    agenda-group "grade-destinations-combined-rules"
     lock-on-active
     when
         $d: Destination($dl: location)

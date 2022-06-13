@@ -9,7 +9,8 @@ import java.time.LocalDateTime;
 
 public class Like {
     @JsonIgnoreProperties({"name", "lastname", "password", "email", "dateOfBirth", "status", "location", "userRank",
-            "travels", "transportationType", "destinationType", "weather", "continent", "budget", "age", "userWeather"})
+            "travels", "transportationType", "destinationType", "weather", "continent", "budget", "age", "userWeather",
+            "sumSpent", "averageSpent"})
     private User user;
     private LocalDateTime time;
 
