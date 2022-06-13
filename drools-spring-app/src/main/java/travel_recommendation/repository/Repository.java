@@ -3,9 +3,11 @@ package travel_recommendation.repository;
 import java.time.LocalDate;
 import travel_recommendation.model.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@org.springframework.stereotype.Repository
 public class Repository {
     private List<User> users;
     private List<Destination> destinations;
@@ -114,5 +116,9 @@ public class Repository {
         }}, new Location("Nouakchott", "Mauritania", "Africa", new Coordinates(18.078985, -15.978416)), new ArrayList<>() {{
 
         }}));
+
+        users.get(0).addTravel(new Travel(this.users.get(0), this.destinations.get(0), LocalDate.of(2022, 6, 6), TransportationType.PLANE, 5, 250));
+        users.get(0).addTravel(new Travel(this.users.get(0), this.destinations.get(1), LocalDate.of(2022, 5, 1), TransportationType.PLANE, 4, 400));
+        destinations.get(0).addLike(new Like(this.users.get(0), LocalDateTime.now()));
     }
 }

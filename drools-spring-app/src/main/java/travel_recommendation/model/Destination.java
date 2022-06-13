@@ -1,15 +1,19 @@
 package travel_recommendation.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Destination {
     private Weather weather;
     private List<DestinationType> destinationTypes;
     private Location location;
-
     private List<TransportationType> transportationTypes;
+    private List<Like> likes;
     private String username;
     private double score;
+    private TransportationType recommendedTransportationType;
+    private double cost;
+    private double grade;
 
     public Destination() {
     }
@@ -19,8 +23,12 @@ public class Destination {
         this.destinationTypes = destinationTypes;
         this.location = location;
         this.transportationTypes = transportationTypes;
+        this.likes = new ArrayList<>();
         this.username = "";
         this.score = 0;
+        this.recommendedTransportationType = TransportationType.NA;
+        this.cost = 0;
+        this.grade = 0;
     }
 
     public Weather getWeather() {
@@ -90,5 +98,41 @@ public class Destination {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public List<Like> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(List<Like> likes) {
+        this.likes = likes;
+    }
+
+    public void addLike(Like like) {
+        this.likes.add(like);
+    }
+
+    public TransportationType getRecommendedTransportationType() {
+        return recommendedTransportationType;
+    }
+
+    public void setRecommendedTransportationType(TransportationType recommendedTransportationType) {
+        this.recommendedTransportationType = recommendedTransportationType;
+    }
+
+    public double getCost() {
+        return cost;
+    }
+
+    public void setCost(double cost) {
+        this.cost = cost;
+    }
+
+    public double getGrade() {
+        return grade;
+    }
+
+    public void setGrade(double grade) {
+        this.grade = grade;
     }
 }

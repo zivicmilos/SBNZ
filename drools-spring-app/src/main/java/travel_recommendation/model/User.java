@@ -1,6 +1,11 @@
 package travel_recommendation.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class User {
     private String name;
@@ -11,16 +16,22 @@ public class User {
     private LocalDate dateOfBirth;
     private Status status;
     private Location location;
+    private UserRank userRank;
+    @JsonManagedReference
+    private List<Travel> travels;
     private TransportationType transportationType;
     private DestinationType destinationType;
     private Weather weather;
     private String continent;
     private double budget;
+    private double averageSpent;
+    private double sumSpent;
 
     public User() {
     }
 
-    public User(String name, String lastname, String username, String password, String email, LocalDate dateOfBirth, Status status, Location location) {
+    public User(String name, String lastname, String username, String password, String email, LocalDate dateOfBirth,
+                Status status, Location location) {
         this.name = name;
         this.lastname = lastname;
         this.username = username;
@@ -29,12 +40,15 @@ public class User {
         this.dateOfBirth = dateOfBirth;
         this.status = status;
         this.location = location;
+        this.userRank = UserRank.REGULAR;
+        this.travels = new ArrayList<>();
         this.destinationType = DestinationType.NA;
         this.transportationType = TransportationType.NA;
         this.weather = Weather.NA;
         this.continent = "";
         this.budget = 0;
-
+        this.averageSpent = 0;
+        this.sumSpent = 0;
     }
 
     public String getName() {
@@ -158,5 +172,41 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public UserRank getUserRank() {
+        return userRank;
+    }
+
+    public void setUserRank(UserRank userRank) {
+        this.userRank = userRank;
+    }
+
+    public List<Travel> getTravels() {
+        return travels;
+    }
+
+    public void setTravels(List<Travel> travels) {
+        this.travels = travels;
+    }
+
+    public void addTravel(Travel travel) {
+        this.travels.add(travel);
+    }
+
+    public double getAverageSpent() {
+        return averageSpent;
+    }
+
+    public void setAverageSpent(double averageSpent) {
+        this.averageSpent = averageSpent;
+    }
+
+    public double getSumSpent() {
+        return sumSpent;
+    }
+
+    public void setSumSpent(double sumSpent) {
+        this.sumSpent = sumSpent;
     }
 }

@@ -16,20 +16,19 @@ import java.util.List;
 public class DestinationService {
 
     private static Logger log = LoggerFactory.getLogger(DestinationService.class);
-
+    private final Repository repository;
     private final KieContainer kieContainer;
 
     @Autowired
-    public DestinationService(KieContainer kieContainer) {
+    public DestinationService(KieContainer kieContainer, Repository repository) {
         log.info("Initialising a new session.");
         this.kieContainer = kieContainer;
-
+        this.repository = repository;
     }
 
     public List<Destination> getDestinationList(String username, TransportationType transportationType, double budget,
                                                 DestinationType destinationType, Weather weather, String continent) {
         KieSession kieSession = kieContainer.newKieSession();
-        Repository repository = new Repository();
 
         List<User> users = repository.getUsers();
         for (User user : users) {
@@ -56,6 +55,14 @@ public class DestinationService {
         kieSession.getAgenda().getAgendaGroup("grade-destinations-budget").setFocus();
         kieSession.fireAllRules();
         kieSession.getAgenda().getAgendaGroup("grade-destinations-complex").setFocus();
+        kieSession.fireAllRules();
+        kieSession.getAgenda().getAgendaGroup("transportation_related_rules").setFocus();
+        kieSession.fireAllRules();
+        kieSession.getAgenda().getAgendaGroup("user_activity_rules").setFocus();
+        kieSession.fireAllRules();
+        kieSession.getAgenda().getAgendaGroup("update_user_rank").setFocus();
+        kieSession.fireAllRules();
+        kieSession.getAgenda().getAgendaGroup("discount_by_user_rank").setFocus();
         kieSession.fireAllRules();
         kieSession.dispose();
 
