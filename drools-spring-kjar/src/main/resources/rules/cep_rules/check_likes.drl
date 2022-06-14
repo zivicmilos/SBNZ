@@ -1,0 +1,38 @@
+package rules.cep_rules;
+dialect  "mvel"
+
+import travel_recommendation.model.User;
+import travel_recommendation.model.Destination;
+import travel_recommendation.model.Like;
+
+global java.util.List myGlobalList;
+
+declare SuspiciousLikeEvent
+    @role(event)
+    username: String
+    destination: String
+    reason: String
+end
+
+rule "More than 5 likes in an hour from one user"
+    salience 1
+    agenda-group "check_likes"
+    lock-on-active
+    when
+        $l1: Like($uId: user.username, $dId: destination.location.city)
+        Number(intValue >= 4) from accumulate(
+            $l2: Like(
+                this != $l1,
+                user.username == $uId,
+                destination.location.city == $dId,
+                this meets[1h] $l1
+            ),
+            count($l2)
+        )
+        not(exists(SuspiciousLikeEvent(username == $uId, destination == $dId, reason == "Too many likes for one destination")))
+    then
+        System.out.println("Too many likes for one destination: " + $uId + ", " + $dId);
+        insert(new SuspiciousLikeEvent($uId, $dId, "Too many likes for one destination"));
+        myGlobalList.add( "Too many likes within the hour");
+
+end

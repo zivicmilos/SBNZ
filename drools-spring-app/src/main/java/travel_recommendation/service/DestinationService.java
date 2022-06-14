@@ -10,6 +10,8 @@ import travel_recommendation.dto.LikeDto;
 import travel_recommendation.model.*;
 import travel_recommendation.repository.Repository;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -47,6 +49,9 @@ public class DestinationService {
         for (Destination d : destinations) {
             d.setUsername(username);
             kieSession.insert(d);
+            /*for (Like l : d.getLikes()) {
+                kieSession.insert(l);
+            }*/
         }
 
         kieSession.getAgenda().getAgendaGroup("add-transportation-types").setFocus();
@@ -65,6 +70,8 @@ public class DestinationService {
         kieSession.fireAllRules();
         kieSession.getAgenda().getAgendaGroup("discount_by_user_rank").setFocus();
         kieSession.fireAllRules();
+        /*kieSession.getAgenda().getAgendaGroup("check_likes").setFocus();
+        kieSession.fireAllRules();*/
         kieSession.dispose();
 
         destinations.sort(Comparator.comparing(Destination::getScore).reversed());
@@ -72,8 +79,26 @@ public class DestinationService {
         return destinations;
     }
 
-    public void like(LikeDto like) {
+    public String like(LikeDto like) {
+        List<String> list = new ArrayList<>();
+        KieSession kieSession = kieContainer.newKieSession();
+
         Destination d = repository.getDestinationByName(like.getDestination());
-        d.addLike(new Like(repository.getUserByUsername(like.getUser()), like.getTime()));
+        d.addLike(new Like(repository.getUserByUsername(like.getUser()), d, like.getTime()));
+
+        for (Destination des : repository.getDestinations()) {
+            for (Like l : d.getLikes()) {
+                kieSession.insert(l);
+            }
+        }
+        kieSession.setGlobal( "myGlobalList", list );
+
+        kieSession.getAgenda().getAgendaGroup("check_likes").setFocus();
+        kieSession.fireAllRules();
+        kieSession.dispose();
+
+        if (!list.isEmpty() && list.get(0).equals("Too many likes within the hour"))
+            return list.get(0);
+        return "Ok";
     }
 }

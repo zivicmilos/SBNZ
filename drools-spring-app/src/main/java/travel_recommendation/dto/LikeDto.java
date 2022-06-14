@@ -1,13 +1,22 @@
 package travel_recommendation.dto;
 
-import java.time.LocalDateTime;
+import org.kie.api.definition.type.Expires;
+import org.kie.api.definition.type.Role;
+import org.kie.api.definition.type.Timestamp;
 
-public class LikeDto {
+import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.Date;
+
+@Role(Role.Type.EVENT)
+@Timestamp("time")
+@Expires("2h30m")
+public class LikeDto implements Serializable {
     private String user;
     private String destination;
-    private LocalDateTime time;
+    private Date time;
 
-    public LikeDto(String user, String destination, LocalDateTime time) {
+    public LikeDto(String user, String destination, Date time) {
         this.user = user;
         this.destination = destination;
         this.time = time;
@@ -29,11 +38,11 @@ public class LikeDto {
         this.destination = destination;
     }
 
-    public LocalDateTime getTime() {
+    public Date getTime() {
         return time;
     }
 
-    public void setTime(LocalDateTime time) {
+    public void setTime(Date time) {
         this.time = time;
     }
 }
