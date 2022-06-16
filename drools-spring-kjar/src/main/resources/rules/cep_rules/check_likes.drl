@@ -20,7 +20,7 @@ rule "More than 5 likes in an hour from one user"
     lock-on-active
     when
         $l1: Like($uId: user.username, $dId: destination.location.city)
-        Number(intValue >= 4) from accumulate(
+        Number(intValue >= 5) from accumulate(
             $l2: Like(
                 this != $l1,
                 user.username == $uId,

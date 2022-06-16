@@ -48,6 +48,7 @@ public class Like {
 
     public boolean isLikedToday() {
         Date now = new Date();
+        now.setHours(now.getHours()+2);
         return this.time.getYear() == now.getYear() && this.time.getMonth() == now.getMonth() && this.time.getDate() == now.getDate();
     }
 

@@ -97,8 +97,10 @@ public class DestinationService {
         kieSession.fireAllRules();
         kieSession.dispose();
 
-        if (!list.isEmpty() && list.get(0).equals("Too many likes within the hour"))
+        if (!list.isEmpty() && list.get(0).equals("Too many likes within the hour")) {
+            d.getLikes().remove(d.getLikes().size() - 1);
             return list.get(0);
+        }
         return "Ok";
     }
 }

@@ -138,6 +138,9 @@ public class Repository {
 
         users.get(0).addTravel(new Travel(this.users.get(0), this.destinations.get(0), LocalDate.of(2022, 6, 6), TransportationType.PLANE, 5, 250));
         users.get(0).addTravel(new Travel(this.users.get(0), this.destinations.get(1), LocalDate.of(2022, 5, 1), TransportationType.PLANE, 4, 400));
-        destinations.get(0).addLike(new Like(this.users.get(0), destinations.get(0), new Date()));
+
+        Date date = new Date();
+        date.setHours(date.getHours()+2);
+        destinations.get(0).addLike(new Like(this.users.get(0), destinations.get(0), date));
     }
 }
