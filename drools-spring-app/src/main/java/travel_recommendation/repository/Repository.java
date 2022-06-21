@@ -51,7 +51,7 @@ public class Repository {
         return null;
     }
 
-    private void initRepository() {
+    public void initRepository() {
         this.users = new ArrayList<User>();
 
         this.users.add(new User("Petar", "Petrovic", "pera", "pera", "pera@gmail.com", LocalDate.of(1996, 5, 5), Status.STUDENT,
@@ -135,6 +135,90 @@ public class Repository {
         }}, new Location("Nouakchott", "Mauritania", "Africa", new Coordinates(18.078985, -15.978416)), new ArrayList<>() {{
 
         }}));
+
+
+
+
+
+        this.destinations.add(new Destination(Weather.NEUTRAL, new ArrayList<DestinationType>() {{
+            add(DestinationType.URBAN); add(DestinationType.ENERGETIC); add(DestinationType.HISTORIC);
+        }}, new Location("Tokio", "Japan", "Asia", new Coordinates(35.690387, 139.773616)),
+                new ArrayList<>(){{ add(TransportationType.PLANE); }}));
+
+        this.destinations.add(new Destination(Weather.NEUTRAL, new ArrayList<DestinationType>() {{
+            add(DestinationType.URBAN); add(DestinationType.ENERGETIC);
+        }}, new Location("Beijing", "China", "Asia", new Coordinates(39.931430, 116.361009)),
+                new ArrayList<>()));
+
+        this.destinations.add(new Destination(Weather.NEUTRAL, new ArrayList<DestinationType>() {{
+            add(DestinationType.URBAN);
+        }}, new Location("New Delhi", "India", "Asia", new Coordinates(28.599055, 77.216318)),
+                new ArrayList<>()));
+
+        this.destinations.add(new Destination(Weather.COLD, new ArrayList<DestinationType>() {{
+            add(DestinationType.URBAN); add(DestinationType.HISTORIC);
+        }}, new Location("Moscow", "Russia", "Asia", new Coordinates(55.743315, 37.646959)),
+                new ArrayList<>()));
+
+        this.destinations.add(new Destination(Weather.WARM, new ArrayList<DestinationType>() {{
+            add(DestinationType.URBAN); add(DestinationType.PARTY); add(DestinationType.ENERGETIC); add(DestinationType.HISTORIC);
+        }}, new Location("Madrid", "Spain", "Europe", new Coordinates(40.403255, -3.686433)),
+                new ArrayList<>()));
+
+        this.destinations.add(new Destination(Weather.WARM, new ArrayList<DestinationType>() {{
+            add(DestinationType.URBAN); add(DestinationType.HISTORIC);
+        }}, new Location("Rome", "Italy", "Europe", new Coordinates(41.894531, 12.500752)),
+                new ArrayList<>()));
+
+        this.destinations.add(new Destination(Weather.COLD, new ArrayList<DestinationType>() {{
+            add(DestinationType.URBAN);
+        }}, new Location("Toronto", "Canada", "North America", new Coordinates(43.673733, -79.433427)),
+                new ArrayList<>()));
+
+        this.destinations.add(new Destination(Weather.WARM, new ArrayList<DestinationType>() {{
+            add(DestinationType.URBAN); add(DestinationType.PARTY); add(DestinationType.ENERGETIC);
+        }}, new Location("Los Angeles", "USA", "North America", new Coordinates(34.034451, -118.242034)),
+                new ArrayList<>()));
+
+        this.destinations.add(new Destination(Weather.WARM, new ArrayList<DestinationType>() {{
+            add(DestinationType.ENERGETIC); add(DestinationType.PARTY); add(DestinationType.OFFSHORE);
+        }}, new Location("Rio de Janeiro", "Brazil", "South America", new Coordinates(-22.931806, -43.180801)),
+                new ArrayList<>()));
+
+        this.destinations.add(new Destination(Weather.WARM, new ArrayList<DestinationType>() {{
+            add(DestinationType.ENERGETIC); add(DestinationType.OFFSHORE);
+        }}, new Location("Montevideo", "Uruguay", "South America", new Coordinates(-34.806351, -56.163378)),
+                new ArrayList<>()));
+
+        this.destinations.add(new Destination(Weather.WARM, new ArrayList<DestinationType>() {{
+            add(DestinationType.ENERGETIC);
+        }}, new Location("Bogota", "Colombia", "South America", new Coordinates(4.687191, -74.052595)),
+                new ArrayList<>()));
+
+        this.destinations.add(new Destination(Weather.WARM, new ArrayList<DestinationType>() {{
+            add(DestinationType.HISTORIC);
+        }}, new Location("Cairo", "Egypt", "Africa", new Coordinates(30.055149, 31.247946)),
+                new ArrayList<>()));
+
+        this.destinations.add(new Destination(Weather.NEUTRAL, new ArrayList<DestinationType>() {{
+            add(DestinationType.EXOTIC); add(DestinationType.WILD);
+        }}, new Location("Johannesburg", "South Africa", "Africa", new Coordinates(-26.219980, 28.048118)),
+                new ArrayList<>()));
+
+        this.destinations.add(new Destination(Weather.WARM, new ArrayList<DestinationType>() {{
+            add(DestinationType.EXOTIC); add(DestinationType.WILD);
+        }}, new Location("Nairobi", "Kenia", "Africa", new Coordinates(-1.289879, 36.831135)),
+                new ArrayList<>()));
+
+        this.destinations.add(new Destination(Weather.WARM, new ArrayList<DestinationType>() {{
+            add(DestinationType.EXOTIC); add(DestinationType.WILD); add(DestinationType.OFFSHORE);
+        }}, new Location("Abidjan", "Cote d'Ivoire", "Africa", new Coordinates(5.353444, -4.003127)),
+                new ArrayList<>()));
+
+        this.destinations.add(new Destination(Weather.WARM, new ArrayList<DestinationType>() {{
+            add(DestinationType.EXOTIC); add(DestinationType.WILD); add(DestinationType.OFFSHORE);
+        }}, new Location("Luanda", "Angola", "Africa", new Coordinates(-8.815041, 13.271068)),
+                new ArrayList<>()));
 
         users.get(0).addTravel(new Travel(this.users.get(0), this.destinations.get(0), LocalDate.of(2022, 6, 6), TransportationType.PLANE, 5, 250));
         users.get(0).addTravel(new Travel(this.users.get(0), this.destinations.get(1), LocalDate.of(2022, 5, 1), TransportationType.PLANE, 4, 400));

@@ -9,6 +9,7 @@ export class Destination {
         public recommendedTransportationType: String = '',
         public likes: any[] = [],
         public cost: Number = 0,
-        public grade: Number = 0
+        public grade: Number = 0,
+        public score: Number = 0,
     ) { }
 }

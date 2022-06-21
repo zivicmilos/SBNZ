@@ -32,6 +32,7 @@ public class DestinationService {
     public List<Destination> getDestinationList(String username, TransportationType transportationType, double budget,
                                                 DestinationType destinationType, Weather weather, String continent) {
         KieSession kieSession = kieContainer.newKieSession();
+        repository.initRepository();
 
         List<User> users = repository.getUsers();
         for (User user : users) {
