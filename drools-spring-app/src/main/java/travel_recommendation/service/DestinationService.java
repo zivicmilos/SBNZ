@@ -50,9 +50,6 @@ public class DestinationService {
         for (Destination d : destinations) {
             d.setUsername(username);
             kieSession.insert(d);
-            /*for (Like l : d.getLikes()) {
-                kieSession.insert(l);
-            }*/
         }
 
         kieSession.getAgenda().getAgendaGroup("add-transportation-types").setFocus();
@@ -71,8 +68,6 @@ public class DestinationService {
         kieSession.fireAllRules();
         kieSession.getAgenda().getAgendaGroup("discount_by_user_rank").setFocus();
         kieSession.fireAllRules();
-        /*kieSession.getAgenda().getAgendaGroup("check_likes").setFocus();
-        kieSession.fireAllRules();*/
         kieSession.dispose();
 
         destinations.sort(Comparator.comparing(Destination::getScore).reversed());
@@ -88,7 +83,7 @@ public class DestinationService {
         d.addLike(new Like(repository.getUserByUsername(like.getUser()), d, like.getTime()));
 
         for (Destination des : repository.getDestinations()) {
-            for (Like l : d.getLikes()) {
+            for (Like l : des.getLikes()) {
                 kieSession.insert(l);
             }
         }

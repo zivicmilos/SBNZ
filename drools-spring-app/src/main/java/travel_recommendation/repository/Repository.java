@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.ListIterator;
 
 @org.springframework.stereotype.Repository
 public class Repository {
@@ -59,6 +60,8 @@ public class Repository {
 
         this.users.add(new User("John", "Johnson", "john", "john", "john@gmail.com", LocalDate.of(1976, 9, 25), Status.EMPLOYED,
                 new Location("Austin", "USA", "North America", new Coordinates(30.284581, -97.743049))));
+
+        ArrayList<Destination> old_destinations = (ArrayList<Destination>) this.destinations;
 
         this.destinations = new ArrayList<Destination>();
 
@@ -136,10 +139,6 @@ public class Repository {
 
         }}));
 
-
-
-
-
         this.destinations.add(new Destination(Weather.NEUTRAL, new ArrayList<DestinationType>() {{
             add(DestinationType.URBAN); add(DestinationType.ENERGETIC); add(DestinationType.HISTORIC);
         }}, new Location("Tokio", "Japan", "Asia", new Coordinates(35.690387, 139.773616)),
@@ -186,6 +185,11 @@ public class Repository {
                 new ArrayList<>()));
 
         this.destinations.add(new Destination(Weather.WARM, new ArrayList<DestinationType>() {{
+            add(DestinationType.EXOTIC); add(DestinationType.ADVENTUROUS); add(DestinationType.WILD);
+        }}, new Location("Manaus", "Brazil", "South America", new Coordinates(-3.049032, -59.980583)),
+                new ArrayList<>()));
+
+        this.destinations.add(new Destination(Weather.WARM, new ArrayList<DestinationType>() {{
             add(DestinationType.ENERGETIC); add(DestinationType.OFFSHORE);
         }}, new Location("Montevideo", "Uruguay", "South America", new Coordinates(-34.806351, -56.163378)),
                 new ArrayList<>()));
@@ -221,10 +225,25 @@ public class Repository {
                 new ArrayList<>()));
 
         users.get(0).addTravel(new Travel(this.users.get(0), this.destinations.get(0), LocalDate.of(2022, 6, 6), TransportationType.PLANE, 5, 250));
+        users.get(0).addTravel(new Travel(this.users.get(0), this.destinations.get(0), LocalDate.of(2022, 6, 6), TransportationType.PLANE, 4, 250));
+        users.get(0).addTravel(new Travel(this.users.get(0), this.destinations.get(0), LocalDate.of(2022, 6, 6), TransportationType.PLANE, 4, 250));
         users.get(0).addTravel(new Travel(this.users.get(0), this.destinations.get(1), LocalDate.of(2022, 5, 1), TransportationType.PLANE, 4, 400));
 
-        Date date = new Date();
-        date.setHours(date.getHours()+2);
-        destinations.get(0).addLike(new Like(this.users.get(0), destinations.get(0), date));
+        if (old_destinations != null) {
+            for (Destination d : this.destinations) {
+                for (Destination od : old_destinations) {
+                    if (d.getLocation().getCity().equals(od.getLocation().getCity())) {
+                        d.setLikes(od.getLikes());
+                        break;
+                    }
+                }
+            }
+        }
+        else {
+            Date date = new Date();
+            date.setHours(date.getHours()+2);
+            destinations.get(0).addLike(new Like(this.users.get(0), destinations.get(0), date));
+        }
+
     }
 }

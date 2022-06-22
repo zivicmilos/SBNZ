@@ -91,8 +91,10 @@
     </div>
 
     <hr>
-    <div>
+    <div class="container">
         <div *ngFor="let d of destinations">
+            <p style="float: left; margin-right: 20px;"><img src="../../../assets/{{d.location.city}}.jpg" height="250px" width="350px"></p>
+            <div>
             <h4>{{d.location.city}}</h4>
             <label>Location: &nbsp;</label>
             <label>{{d.location.country}}&nbsp;&nbsp;</label>
@@ -113,15 +115,16 @@
             <label>{{d.recommendedTransportationType}}</label>
             <br>
             <label>Grade: &nbsp;</label>
-            <label>{{d.grade}}&nbsp;&nbsp;</label>
+            <label>{{d.grade | number : '1.0-2'}}&nbsp;&nbsp;</label>
             <label>Cost: &nbsp;</label>
-            <label>{{d.cost}}&euro;&nbsp;&nbsp;</label>
+            <label>{{d.cost | number : '1.0-0'}}&euro;&nbsp;&nbsp;</label>
             <label>Likes: &nbsp;</label>
             <label>{{d.likes.length}}&nbsp;</label>
             <button type="button" class="btn btn-primary btn-block mb-4 mx-5" (click)="like(d.location.city)">Like</button>
             <br>
             <label>Score: &nbsp;</label>
-            <label>{{d.score}}&nbsp;</label>
+            <label>{{d.score | number : '1.0-0'}}&nbsp;</label>
+            </div>
             <hr>
         </div>
     </div>

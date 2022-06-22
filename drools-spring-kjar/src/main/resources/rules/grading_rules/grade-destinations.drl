@@ -29,8 +29,8 @@ rule "Lower score if destination does not have requested transportation type"
         $d : Destination($u.username == username, transportationTypes not contains $u.transportationType)
     then
         modify($d){setScore($d.getScore()-30)}
-        modify($d){setRecommendedTransportationType(TransportationType.CAR)}
-        modify($d){setCost($d.costByTransportType(TransportationType.CAR, $u.location))}
+        modify($d){setRecommendedTransportationType(TransportationType.PLANE)}
+        modify($d){setCost($d.costByTransportType(TransportationType.PLANE, $u.location))}
 end
 
 rule "Higher score if weather is matching"

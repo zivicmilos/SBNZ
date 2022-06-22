@@ -6,10 +6,10 @@ export class Destination {
         public transportationTypes: string[] = [],
         public destinationTypes: string[] = [],
         public location: Location = new Location(),
-        public recommendedTransportationType: String = '',
+        public recommendedTransportationType: string = '',
         public likes: any[] = [],
-        public cost: Number = 0,
-        public grade: Number = 0,
-        public score: Number = 0,
+        public cost: number = 0,
+        public grade: number = 0,
+        public score: number = 0,
     ) { }
 }
