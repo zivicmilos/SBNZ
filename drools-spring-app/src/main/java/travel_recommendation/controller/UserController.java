@@ -3,6 +3,8 @@ package travel_recommendation.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import travel_recommendation.model.*;
 import travel_recommendation.service.DestinationService;
@@ -35,8 +37,8 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user/login", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
-    public User login(@RequestBody User user) {
-        return userService.login(user);
+    public ResponseEntity<?> login(@RequestBody User user) {
+        return new ResponseEntity<>(userService.login(user), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/user/travel/cancel", method = RequestMethod.POST, consumes = "application/json")

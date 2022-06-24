@@ -22,9 +22,18 @@ public class UserService {
         return repository.getUsers();
     }
 
-    public User login(User user) {
+    public Object login(User user) {
         List<User> users = repository.getUsers();
-        return users.stream().filter(u->u.getUsername().equals(user.getUsername()) && u.getPassword().equals(user.getPassword())).findFirst().orElse(null);
+        User retVal = users.stream().filter(u->u.getUsername().equals(user.getUsername()) && u.getPassword().equals(user.getPassword())).findFirst().orElse(null);
+        if (retVal != null) {
+            return retVal;
+        }
+        else if (users.stream().filter(u->u.getUsername().equals(user.getUsername())).findFirst().orElse(null) != null) {
+            return "\"" + "Wrong password!" + "\"";
+        }
+        else {
+            return "\"" + "User with this username does not exists!" + "\"";
+        }
     }
 
     public List<Travel> getTravelsByUsername(String username) {

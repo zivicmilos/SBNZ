@@ -10,6 +10,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class LoginComponent implements OnInit {
   user: User = new User();
+  errorMessage: string = '';
 
   constructor(private userService: UserService, private router: Router) { }
 
@@ -19,9 +20,12 @@ export class LoginComponent implements OnInit {
   login() {
     this.userService.login(this.user).subscribe(
       (data: any) => {
-        if (data) {
+        if (data.username) {
           this.userService.setCurrentUser(data);
           this.router.navigate(['/home']);
+        }
+        else {
+          this.errorMessage = data;
         }
       });
   }
