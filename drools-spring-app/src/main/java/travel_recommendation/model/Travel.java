@@ -1,9 +1,14 @@
 package travel_recommendation.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.kie.api.definition.type.Expires;
+import org.kie.api.definition.type.Role;
+import org.kie.api.definition.type.Timestamp;
 
 import java.time.LocalDate;
 
+@Role(Role.Type.EVENT)
+@Expires("2h30m")
 public class Travel {
     @JsonBackReference
     private User user;

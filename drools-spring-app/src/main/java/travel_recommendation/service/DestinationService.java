@@ -1,5 +1,6 @@
 package travel_recommendation.service;
 
+import org.apache.juli.logging.Log;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.slf4j.Logger;
@@ -21,6 +22,9 @@ public class DestinationService {
     private static Logger log = LoggerFactory.getLogger(DestinationService.class);
     private final Repository repository;
     private final KieContainer kieContainer;
+    private List<String> list = new ArrayList<>();
+    private List<DeletedTravel> deletedTravels = new ArrayList<>();
+    private List<LoginFailure> loginFailures = new ArrayList<>();
 
     @Autowired
     public DestinationService(KieContainer kieContainer, Repository repository) {
@@ -76,22 +80,11 @@ public class DestinationService {
     }
 
     public String like(LikeDto like) {
-        List<String> list = new ArrayList<>();
-        KieSession kieSession = kieContainer.newKieSession();
-
+        list = new ArrayList<>();
         Destination d = repository.getDestinationByName(like.getDestination());
         d.addLike(new Like(repository.getUserByUsername(like.getUser()), d, like.getTime()));
 
-        for (Destination des : repository.getDestinations()) {
-            for (Like l : des.getLikes()) {
-                kieSession.insert(l);
-            }
-        }
-        kieSession.setGlobal( "myGlobalList", list );
-
-        kieSession.getAgenda().getAgendaGroup("check_likes").setFocus();
-        kieSession.fireAllRules();
-        kieSession.dispose();
+        cepRules();
 
         if (!list.isEmpty() && list.get(0).equals("Too many likes within the hour")) {
             d.getLikes().remove(d.getLikes().size() - 1);
@@ -106,5 +99,64 @@ public class DestinationService {
         travel.setCost(travel.getDestination().costByTransportType(travel.getTransportationType(), travel.getUser().getLocation()));
 
         repository.getUserByUsername(travel.getUser().getUsername()).addTravel(travel);
+
+        cepRules();
+    }
+
+    public void cepRules() {
+        KieSession kieSession = kieContainer.newKieSession();
+
+        for (User u : repository.getUsers()) {
+            kieSession.insert(u);
+        }
+
+        for (Destination des : repository.getDestinations()) {
+            for (Like l : des.getLikes()) {
+                kieSession.insert(l);
+            }
+        }
+
+        for (User u : repository.getUsers()) {
+            for (Travel t : u.getTravels()) {
+                kieSession.insert(t);
+            }
+        }
+
+        for (DeletedTravel dt : this.deletedTravels) {
+            kieSession.insert(dt);
+        }
+
+        for (LoginFailure lf : this.loginFailures) {
+            kieSession.insert(lf);
+        }
+
+        kieSession.setGlobal( "myGlobalList", list );
+
+        kieSession.getAgenda().getAgendaGroup("check_likes").setFocus();
+        kieSession.fireAllRules();
+        kieSession.dispose();
+    }
+
+    public void addDeletedTravel(DeletedTravel deletedTravel) {
+        this.deletedTravels.add(deletedTravel);
+    }
+
+    public List<DeletedTravel> getDeletedTravels() {
+        return this.deletedTravels;
+    }
+
+    public void setDeletedTravels(List<DeletedTravel> deletedTravels) {
+        this.deletedTravels = deletedTravels;
+    }
+
+    public void addLoginFailure(LoginFailure loginFailure) {
+        this.loginFailures.add(loginFailure);
+    }
+    public List<LoginFailure> getLoginFailures() {
+        return loginFailures;
+    }
+
+    public void setLoginFailures(List<LoginFailure> loginFailures) {
+        this.loginFailures = loginFailures;
     }
 }

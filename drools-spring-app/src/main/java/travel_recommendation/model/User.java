@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class User {
@@ -26,6 +27,8 @@ public class User {
     private double budget;
     private double averageSpent;
     private double sumSpent;
+    private Date loginBlocked;
+    private Date reservationBlocked;
 
     public User() {
     }
@@ -49,6 +52,8 @@ public class User {
         this.budget = 0;
         this.averageSpent = 0;
         this.sumSpent = 0;
+        this.loginBlocked = new Date(2021, 5,5);
+        this.reservationBlocked =  new Date(2021, 5,5);
     }
 
     public String getName() {
@@ -208,5 +213,21 @@ public class User {
 
     public void setSumSpent(double sumSpent) {
         this.sumSpent = sumSpent;
+    }
+
+    public Date getLoginBlocked() {
+        return loginBlocked;
+    }
+
+    public void setLoginBlocked(Date loginBlocked) {
+        this.loginBlocked = loginBlocked;
+    }
+
+    public Date getReservationBlocked() {
+        return reservationBlocked;
+    }
+
+    public void setReservationBlocked(Date reservationBlocked) {
+        this.reservationBlocked = reservationBlocked;
     }
 }

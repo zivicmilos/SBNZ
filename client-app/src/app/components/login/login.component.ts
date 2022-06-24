@@ -30,4 +30,14 @@ export class LoginComponent implements OnInit {
       });
   }
 
+  isLoginBlocked() {
+    var date = new Date(this.userService.getCurrentUser().loginBlocked);
+    date.setMinutes(date.getMinutes());
+    var today = new Date();
+    if (date > today)
+      return false;
+    else 
+      return false;
+  }
+
 }
