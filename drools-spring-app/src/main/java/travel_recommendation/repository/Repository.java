@@ -53,6 +53,7 @@ public class Repository {
     }
 
     public void initRepository() {
+        ArrayList<User> old_users = (ArrayList<User>) this.users;
         this.users = new ArrayList<User>();
 
         this.users.add(new User("Petar", "Petrovic", "pera", "pera", "pera@gmail.com", LocalDate.of(1996, 5, 5), Status.STUDENT,
@@ -224,10 +225,22 @@ public class Repository {
         }}, new Location("Luanda", "Angola", "Africa", new Coordinates(-8.815041, 13.271068)),
                 new ArrayList<>()));
 
-        users.get(0).addTravel(new Travel(this.users.get(0), this.destinations.get(0), LocalDate.of(2022, 6, 6), TransportationType.PLANE, 5, 250));
-        users.get(0).addTravel(new Travel(this.users.get(0), this.destinations.get(0), LocalDate.of(2022, 6, 6), TransportationType.PLANE, 4, 250));
-        users.get(0).addTravel(new Travel(this.users.get(0), this.destinations.get(0), LocalDate.of(2022, 6, 6), TransportationType.PLANE, 4, 250));
-        users.get(0).addTravel(new Travel(this.users.get(0), this.destinations.get(1), LocalDate.of(2022, 5, 1), TransportationType.PLANE, 4, 400));
+        if (old_users != null) {
+            for (User u : this.users) {
+                for (User ou : old_users) {
+                    if (u.getUsername().equals(ou.getUsername())) {
+                        u.setTravels(ou.getTravels());
+                        break;
+                    }
+                }
+            }
+        }
+        else {
+            users.get(0).addTravel(new Travel(this.users.get(0), this.destinations.get(0), LocalDate.of(2022, 6, 6), TransportationType.PLANE, 5, 250));
+            users.get(0).addTravel(new Travel(this.users.get(0), this.destinations.get(0), LocalDate.of(2022, 6, 6), TransportationType.PLANE, 4, 250));
+            users.get(0).addTravel(new Travel(this.users.get(0), this.destinations.get(0), LocalDate.of(2022, 6, 6), TransportationType.PLANE, 4, 250));
+            users.get(0).addTravel(new Travel(this.users.get(0), this.destinations.get(1), LocalDate.of(2022, 5, 1), TransportationType.PLANE, 4, 400));
+        }
 
         if (old_destinations != null) {
             for (Destination d : this.destinations) {

@@ -3,16 +3,15 @@ package travel_recommendation.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import travel_recommendation.model.*;
 import travel_recommendation.service.DestinationService;
 import travel_recommendation.service.UserService;
 
+import javax.websocket.server.PathParam;
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RestController
 public class UserController {
     private static Logger log = LoggerFactory.getLogger(DestinationController.class);
@@ -27,5 +26,21 @@ public class UserController {
     @RequestMapping(value = "/user", method = RequestMethod.GET, produces = "application/json")
     public List<User> getUsers() {
         return userService.getUsers();
+    }
+
+    @RequestMapping(value = "/user/travel", method = RequestMethod.GET, produces = "application/json")
+    public List<Travel> getTravelsByUsername(@PathParam("username") String username) {
+        List<Travel> l = userService.getTravelsByUsername(username);
+        return l;
+    }
+
+    @RequestMapping(value = "/user/login", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+    public User login(@RequestBody User user) {
+        return userService.login(user);
+    }
+
+    @RequestMapping(value = "/user/travel/cancel", method = RequestMethod.POST, consumes = "application/json")
+    public void cancelTravel(@RequestBody Travel travel) {
+        userService.cancelTravel(travel);
     }
 }

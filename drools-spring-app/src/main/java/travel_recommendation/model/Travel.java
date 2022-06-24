@@ -11,7 +11,7 @@ public class Travel {
     private LocalDate travelDate;
     private TransportationType transportationType;
     private int grade;
-    private int cost;
+    private double cost;
 
     public Travel(User user, Destination destination, LocalDate travelDate, TransportationType transportationType, int grade, int cost) {
         this.user = user;
@@ -54,11 +54,11 @@ public class Travel {
         this.grade = grade;
     }
 
-    public int getCost() {
+    public double getCost() {
         return cost;
     }
 
-    public void setCost(int cost) {
+    public void setCost(double cost) {
         this.cost = cost;
     }
 

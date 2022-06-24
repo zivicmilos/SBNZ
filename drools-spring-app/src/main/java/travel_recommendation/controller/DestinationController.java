@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import travel_recommendation.dto.LikeDto;
@@ -39,6 +40,12 @@ public class DestinationController {
     public String like(@RequestBody LikeDto like) {
         String message = destinationService.like(like);
         return "\"" + message + "\"";
+    }
+
+    @RequestMapping(value = "/reservation", method = RequestMethod.POST, consumes = "application/json")
+    public ResponseEntity<?> reserve(@RequestBody Travel travel) {
+        this.destinationService.reserve(travel);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

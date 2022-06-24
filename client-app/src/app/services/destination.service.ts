@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Like } from '../model/like-model';
+import { Travel } from '../model/travel-model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,5 +19,8 @@ export class DestinationService {
 
   like(like: Like) {
     return this.http.post(this.baseUrl + 'like', like);
+  }
+  reserve(travel: Travel) {
+    return this.http.post(this.baseUrl + 'reservation', travel);
   }
 }

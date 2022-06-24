@@ -99,4 +99,12 @@ public class DestinationService {
         }
         return "Ok";
     }
+
+    public void reserve(Travel travel) {
+        travel.setUser(repository.getUserByUsername(travel.getUser().getUsername()));
+        travel.setDestination(repository.getDestinationByName(travel.getDestination().getLocation().getCity()));
+        travel.setCost(travel.getDestination().costByTransportType(travel.getTransportationType(), travel.getUser().getLocation()));
+
+        repository.getUserByUsername(travel.getUser().getUsername()).addTravel(travel);
+    }
 }
