@@ -41,7 +41,6 @@ declare LoginFailureEvent
 end
 
 declare LoginBlockEvent
-    @role(event)
     username: String
 end
 
@@ -120,7 +119,8 @@ rule "More than 5 failed logins in an hour from one user"
     agenda-group "check_likes"
     lock-on-active
     when
-        $t1: LoginFailure($uId: user.username)
+        $user: User($u: username)
+        $t1: LoginFailure($uId: user.username, $u == user.username)
         Number(intValue >= 5) from accumulate(
             $t2: LoginFailure(
                 this != $t1,
@@ -133,24 +133,25 @@ rule "More than 5 failed logins in an hour from one user"
     then
         System.out.println("Failed to log in more than 5 times: " + $uId);
         insert(new LoginFailureEvent($uId, "Failed to log in more than 5 times"));
+        modify($user){setLoginBlocked(new Date())}
         //myGlobalList.add( "Failed to log in more than 5 times");
 end
 
-rule "More than 3 failed logins events in an hour from one user"
+/*rule "More than 3 failed logins events in an hour from one user"
     salience 1
     agenda-group "check_likes"
     lock-on-active
     when
         $user: User($u: username)
-        LoginFailureEvent($uId: username)
-        not (LoginBlockEvent(username == $uId))
-        Number(intValue >= 1) from accumulate(
-            $s: LoginFailureEvent(username == $uId, username == $u),
+        //LoginFailureEvent($uId: username)
+        //not (LoginBlockEvent(username == $uId))
+        Number(intValue >= 0) from accumulate(
+            $s: LoginFailureEvent(username == $u),
             count($s)
         )
     then
-        System.out.println("More than 3 failed logins events: " + $uId);
-        insert(new LoginBlockEvent($uId));
+        //System.out.println("More than 3 failed logins events: " + $uId);
+        //insert(new LoginBlockEvent($uId));
         modify($user){setLoginBlocked(new Date())}
         //myGlobalList.add( "Failed to log in more than 5 times");
-end
+end*/

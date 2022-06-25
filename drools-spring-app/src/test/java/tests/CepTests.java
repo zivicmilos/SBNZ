@@ -5,8 +5,14 @@ import org.kie.api.KieServices;
 import org.kie.api.builder.KieScanner;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
-import travel_recommendation.model.LoginFailure;
-import travel_recommendation.model.User;
+import travel_recommendation.model.*;
+
+import java.time.LocalDate;
+import java.util.Date;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 public class CepTests {
     private KieContainer kContainer;
@@ -21,14 +27,24 @@ public class CepTests {
     @Test
     public void testLoginFailing() {
         KieSession kieSession = kContainer.newKieSession();
-        kieSession.insert(new LoginFailure(new User()));
-        kieSession.insert(new LoginFailure(new User()));
-        kieSession.insert(new LoginFailure(new User()));
-        kieSession.insert(new LoginFailure(new User()));
-        kieSession.insert(new LoginFailure(new User()));
+        User user = new User("Petar", "Petrovic", "pera", "pera", "pera@gmail.com", LocalDate.of(1996, 5, 5), Status.STUDENT,
+                new Location("Novi Sad", "Serbia", "Europe", new Coordinates(45.267136, 19.833549)));
+        kieSession.insert(user);
+        kieSession.insert(new LoginFailure(user));
+        kieSession.insert(new LoginFailure(user));
+        kieSession.insert(new LoginFailure(user));
+        kieSession.insert(new LoginFailure(user));
+        kieSession.insert(new LoginFailure(user));
+        kieSession.insert(new LoginFailure(user));
 
         kieSession.getAgenda().getAgendaGroup("check_likes").setFocus();
-        kieSession.fireAllRules();
+        int firedRules = kieSession.fireAllRules();
+
+        assertThat(1, equalTo(firedRules));
+        System.out.println(user.getLoginBlocked());
+        System.out.println(new Date());
+        assertEquals(true, user.getLoginBlocked().before(new Date()));
+
         kieSession.dispose();
     }
 
